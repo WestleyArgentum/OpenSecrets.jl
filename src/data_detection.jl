@@ -11,6 +11,6 @@ function detect_data_sources(dir::String = joinpath(Pkg.dir(), "OpenSecrets/data
         data_sources[year] = abspath(joinpath(dir, thing))
     end
 
-    isdefined(:_data_sources) && merge!(_data_sources, data_sources)
+    isdefined(:_campaign_finance_data_sources) && merge!(_campaign_finance_data_sources, data_sources)
     data_sources
 end

@@ -1,8 +1,11 @@
 
 module OpenSecrets
 
-include("data_detection.jl")
+using DataFrames
 
-global _data_sources = detect_data_sources()
+include("data_detection.jl")
+include("data_loading.jl")
+
+global _campaign_finance_data_sources = detect_data_sources()
 
 end
