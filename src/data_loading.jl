@@ -1,6 +1,6 @@
 
 function strip_brackets(str)
-    str[2:end-1]
+    isempty(str) ? "" : str[2:end-1]
 end
 
 function short_year(year)
@@ -29,4 +29,15 @@ function load_pacs_to_candidates(year)
     DataFrame(Cycle = raw_data[:, 1], FECRecNo = raw_data[:, 2], PACID = raw_data[:, 3], CID = raw_data[:, 4],
         Amount = raw_data[:, 5], Date = raw_data[:, 6], RealCode = raw_data[:, 7], Type = raw_data[:, 8],
         DI = raw_data[:, 9], FECCandID = raw_data[:, 10])
+end
+
+function load_committee_table(year)
+    short_year_str, short_year_int = short_year(year)
+    data_path = joinpath(_campaign_finance_data_sources[short_year_int], "cmtes$(short_year_str).txt")
+
+    data = readtable(data_path; separator = ',', header = false, quotemark = ['|'], truestrings = ["1"], falsestrings = ["0"],
+                     names = [:Cycle, :CmteID, :PACShort, :Affiliate, :Ultorg, :RecipID, :RecipCode,
+                     :FECCandID, :Party, :PrimCode, :Source, :Sensitive, :Foreign, :Active],
+                     eltypes = [Int, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String,
+                     UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, Int, Bool])
 end
