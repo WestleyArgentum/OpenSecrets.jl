@@ -57,3 +57,28 @@ function load_pacs_to_other(year)
               UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String])
 end
 
+# -------
+
+function load_individual_contributions(year)
+    short_year_str, short_year_int = short_year(year)
+    data_path = joinpath(get(_campaign_finance_data_sources, short_year_int, ""), "indivs$(short_year_str).txt")
+
+    if year <= 2012
+        field_names = [:Cycle, :FECTransID, :ContribID, :Contrib, :RecipID, :Orgname, :UltOrg, :RealCode, :Date,
+                      :Amount, :Street, :City, :State, :Zip, :RecipCode, :Type, :CmteID, :OtherID, :Gender,
+                      :FecOccEmp, :Microfilm, :Occ_EF, :Emp_EF, :Source]
+        field_vals = [Int, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String,
+                     UTF8String, Int, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String,
+                     UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String]
+    else
+        field_names = [:Cycle, :FECTransID, :ContribID, :Contrib, :RecipID, :Orgname, :UltOrg, :RealCode, :Date,
+                      :Amount, :Street, :City, :State, :Zip, :RecipCode, :Type, :CmteID, :OtherID, :Gender,
+                      :Microfilm, :Occupation, :Employer, :Source]
+        field_vals = [Int, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String,
+                     UTF8String, Int, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String,
+                     UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String]
+    end
+
+    readtable(data_path; separator = ',', header = false, quotemark = ['|'],
+              names = field_names, eltypes = field_vals)
+end
