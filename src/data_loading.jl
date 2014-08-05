@@ -18,7 +18,7 @@ end
 
 # -------
 
-function load_committee_table(year)
+function load_committees(year)
     short_year_str, short_year_int = short_year(year)
     data_path = joinpath(get(_campaign_finance_data_sources, short_year_int, ""), "cmtes$(short_year_str).txt")
 
@@ -31,3 +31,13 @@ end
 
 # -------
 
+function load_candidates(year)
+    short_year_str, short_year_int = short_year(year)
+    data_path = joinpath(get(_campaign_finance_data_sources, short_year_int, ""), "cands$(short_year_str).txt")
+
+    readtable(data_path; separator = ',', header = false, quotemark = ['|'],
+              names = [:Cycle, :FECCandID, :CID, :FirstLastP, :Party, :DistIDRunFor, :DistIDCurr, :CurrCand,
+              :CycleCand, :CRPICO, :RecipCode, :NoPacs],
+              eltypes = [Int, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String,
+              UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String])
+end
