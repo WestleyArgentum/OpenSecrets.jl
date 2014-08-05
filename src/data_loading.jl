@@ -41,3 +41,19 @@ function load_candidates(year)
               eltypes = [Int, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String,
               UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String])
 end
+
+# -------
+
+function load_pacs_to_other(year)
+    short_year_str, short_year_int = short_year(year)
+    data_path = joinpath(get(_campaign_finance_data_sources, short_year_int, ""), "pac_other$(short_year_str).txt")
+
+    readtable(data_path; separator = ',', header = false, quotemark = ['|'],
+              names = [:Cycle, :FECRecNo, :Filerid, :DonorCmte, :ContribLendTrans, :City, :State, :Zip, :FECOccEmp,
+              :Primcode, :Date, :Amount, :RecipID, :Party, :Otherid, :RecipCode, :RecipPrimcode, :Amend, :Report,
+              :PG, :Microfilm, :Type, :RealCode, :Source],
+              eltypes = [Int, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String,
+              UTF8String, UTF8String, UTF8String, Float64, UTF8String, UTF8String, UTF8String, UTF8String,
+              UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String, UTF8String])
+end
+
