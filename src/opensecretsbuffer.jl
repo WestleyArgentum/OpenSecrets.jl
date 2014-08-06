@@ -2,11 +2,8 @@ import Base.read, Base.eof, Base.close
  
 type OpenSecretsBuffer <: IO
     io::IO
-    peek
-    add_backslash
-
  
-    OpenSecretsBuffer(io::IO) = new(io, nothing, false)
+    OpenSecretsBuffer(io::IO) = new(io)
 end
  
 function Base.read(os::OpenSecretsBuffer, ::Type{Uint8})
@@ -14,6 +11,6 @@ function Base.read(os::OpenSecretsBuffer, ::Type{Uint8})
     c == '\\' ? ' ' : c
 end
 
-Base.eof(os::OpenSecretsBuffer) = os.peek == nothing && eof(os.io)
+Base.eof(os::OpenSecretsBuffer) = eof(os.io)
 
 Base.close(os::OpenSecretsBuffer) = close(os.io)
