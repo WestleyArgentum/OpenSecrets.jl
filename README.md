@@ -70,7 +70,7 @@ detect_data_sources(dir::String)
 
 ### Campaign Finance Data
 
-### Common Inputs / Outputs
+#### Common Inputs / Outputs
 All of the campaign finance data methods take an integer `year`, and output a DataFrame. Data sets are released every 2 years (according to the election cycle) and data is available starting 1990.
 
 #### Candidates
