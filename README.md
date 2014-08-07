@@ -54,3 +54,52 @@ julia> pac_contribs[ Bool[ !isna(c) && ismatch(r"N00009638", c) for c in pac_con
 | 30630 | 2012  | "4020120131180474397" | "C90011156" | "N00009638" | 3.0    | "10/04/2012" | "L0000"  | "24E" | "I" | "P80003338" |
 | 30631 | 2012  | "4020120131180497016" | "C90011156" | "N00009638" | 26.0   | "10/25/2012" | "L0000"  | "24E" | "I" | "P80003338" |
 ```
+
+## API
+
+### OpenSecrets.jl
+
+#### Detecting Data Sources
+Unfortunately it's not practicle to bundle all the OpenSecrets data along with this package. Instead, OpenSecrets.jl attempts to detect sources of data stored locally in `OpenSecrets.jl/data`. If your data is stored somewhere else, you can tell OpenSecrets.jl about it using `detect_data_sources`.
+
+```julia
+detect_data_sources(dir::String)
+```
+- `dir`: The path to a directory containing unziped versions of the OpenSecrets OpenData.
+
+
+### Campaign Finance Data
+
+### Common Inputs / Outputs
+All of the campaign finance data methods take an integer `year`, and output a DataFrame. Data sets are released every 2 years (according to the election cycle) and data is available starting 1990.
+
+#### Candidates
+```julia
+OpenSecrets.candidates(year)
+```
+The candidates table includes lots of interesting information about candidates, including but not limited to: their unique CID, party, and whether they've committed to forgo contributions from PACs.
+
+#### FEC Committees (PACs and Candidate and Party Committees)
+```julia
+OpenSecretes.committees(year)
+```
+The committees table contains information about all types of FEC Committees. Interesting fields include "CmteID", which is unique id assigned by the FEC, and "Sensative" which denotes the the committee has business in industries that fall under the jurisdiction of specific congressional committees.
+
+
+#### PACs to Candidates
+
+#### PACs to PACs
+
+#### Individual Contributions
+
+
+### Lobbying Data
+Not yet implemented! Please contribute!
+
+
+### 527 Data
+Not yet implemented! Please contribute!
+
+
+### Personal Finance Data
+Not yet implemented! Please contribute!
