@@ -68,7 +68,9 @@ function load_individual_contributions(year)
     data_path = joinpath(get(_campaign_finance_data_sources, short_year_int, ""), "indivs$(short_year_str).txt")
     data_stream = OpenSecretsBuffer(Latin1Buffer(open(data_path, "r")))
 
-    if year < 2012
+    # the OpenData naming scheme isn't really scalable, but for now, 90 and above for 1990 - 1999
+    # and 00+ for 2000 and on.
+    if 90 <= short_year_int
         field_names = [:Cycle, :FECTransID, :ContribID, :Contrib, :RecipID, :Orgname, :UltOrg, :RealCode, :Date,
                       :Amount, :Street, :City, :State, :Zip, :RecipCode, :Type, :CmteID, :OtherID, :Gender,
                       :FecOccEmp, :Microfilm, :Occ_EF, :Emp_EF, :Source]
