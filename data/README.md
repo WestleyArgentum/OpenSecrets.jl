@@ -1,7 +1,7 @@
 
 # Loading OpenSecrets OpenData
 
-Unfortunately it's not practicle to bundle all the OpenSecrets data along with this package. The bundles can be huge, which causes problems with git, and they're will always be more and more released.
+Unfortunately it's not practicle to bundle all the OpenSecrets data along with this package. The bundles can be huge, which causes problems with git, and there will always be more and more released.
 
 So! This package works by recognizing and loading the [official bulk data bundles](http://www.opensecrets.org/resources/create/data.php). 
 
