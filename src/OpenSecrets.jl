@@ -3,6 +3,9 @@ module OpenSecrets
 
 using DataFrames
 
+export pacs_to_candidates, committees, candidates,
+       pacs_to_other, individual_contributions
+
 include("latin1buffer.jl")
 include("opensecretsbuffer.jl")
 include("data_detection.jl")

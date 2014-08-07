@@ -6,7 +6,7 @@ end
 
 # -------
 
-function load_pacs_to_candidates(year)
+function pacs_to_candidates(year)
     short_year_str, short_year_int = short_year(year)
     data_path = joinpath(get(_campaign_finance_data_sources, short_year_int, ""), "pacs$(short_year_str).txt")
     data_stream = OpenSecretsBuffer(Latin1Buffer(open(data_path, "r")))
@@ -19,7 +19,7 @@ end
 
 # -------
 
-function load_committees(year)
+function committees(year)
     short_year_str, short_year_int = short_year(year)
     data_path = joinpath(get(_campaign_finance_data_sources, short_year_int, ""), "cmtes$(short_year_str).txt")
     data_stream = OpenSecretsBuffer(Latin1Buffer(open(data_path, "r")))
@@ -33,7 +33,7 @@ end
 
 # -------
 
-function load_candidates(year)
+function candidates(year)
     short_year_str, short_year_int = short_year(year)
     data_path = joinpath(get(_campaign_finance_data_sources, short_year_int, ""), "cands$(short_year_str).txt")
     data_stream = OpenSecretsBuffer(Latin1Buffer(open(data_path, "r")))
@@ -47,7 +47,7 @@ end
 
 # -------
 
-function load_pacs_to_other(year)
+function pacs_to_other(year)
     short_year_str, short_year_int = short_year(year)
     data_path = joinpath(get(_campaign_finance_data_sources, short_year_int, ""), "pac_other$(short_year_str).txt")
     data_stream = OpenSecretsBuffer(Latin1Buffer(open(data_path, "r")))
@@ -63,7 +63,7 @@ end
 
 # -------
 
-function load_individual_contributions(year)
+function individual_contributions(year)
     short_year_str, short_year_int = short_year(year)
     data_path = joinpath(get(_campaign_finance_data_sources, short_year_int, ""), "indivs$(short_year_str).txt")
     data_stream = OpenSecretsBuffer(Latin1Buffer(open(data_path, "r")))
