@@ -8,6 +8,8 @@ A Julia package for working with [OpenSecrets data](http://www.opensecrets.org/r
 ```julia
 julia> Pkg.clone("https://github.com/WestleyArgentum/OpenSecrets.jl.git")
 
+julia> using DataFrames
+
 julia> using OpenSecrets
 
 julia> candidates = OpenSecrets.candidates(2012)
