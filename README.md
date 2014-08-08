@@ -61,7 +61,7 @@ julia> pac_contribs[ Bool[ !isna(c) && ismatch(r"N00009638", c) for c in pac_con
 Unfortunately it's not practicle to bundle all the OpenSecrets data along with this package. Instead, OpenSecrets.jl attempts to detect sources of data stored locally in `OpenSecrets.jl/data`. If your data is stored somewhere else, you can tell OpenSecrets.jl about it by calling `detect_data_sources` with the path to the directory containing the unzipped files.
 
 ```julia
-detect_data_sources(dir::String)
+OpenSecrets.detect_data_sources(dir::String)
 ```
 
 
@@ -90,36 +90,36 @@ OpenSecrets.candidates(year)
 ```julia
 OpenSecretes.committees(year)
 ```
-- `Cycle`: 
-- `CmteID`: 
-- `PACShort`: 
-- `Affiliate`: 
-- `Ultorg`: 
-- `RecipID`: 
-- `RecipCode`: 
-- `FECCandID`: 
-- `Party`: 
-- `PrimCode`: 
-- `Source`: 
-- `Sensitive`: 
-- `Foreign`: 
-- `Active`: 
+- `Cycle`: Last year (even year) of the federal 2-year election cycle
+- `CmteID`: Unique ID given by FEC to each committee.
+- `PACShort`: Standardized committee name based on PAC's sponsor.
+- `Affiliate`: Usually blank. For leadpacs, shows the sponsoring member.
+- `Ultorg`: The standardized parent organization for the organization listed in the PACShort field. If there is no parent identified, this field will be equal to PACShort.
+- `RecipID`: For candidate committees this will be the candidate's CID. Otherwise, it will be the same as CmteID.
+- `RecipCode`: A two-character code defining the type of recipient. For candidates, the first character is party ("D" for Democratic, "R" for Republican, "3" for Independent, Libertarian or third party, "U" for Unknown.) The second character is "W" for Winner, "L" for Loser, "I" for incumbent, "C" for Challenger, "O" for "Open Seat", and "N" for Non-incumbent. "N" is reserved for candidates that are neither in office nor running during the cycle in question. For party committees, the first character is party and the second character is "P." For PACs, the first character is "P" and for outside spending groups, "O". For both, the second character is "B" for Business, "L" for Labor", "I" for Ideological, "O" for "Other" and "U" for unknown.
+- `FECCandID`: Unique ID given to candidates by FEC.
+- `Party`: (D,R,3,I,L) Will be null or empty if committee is not a party, joint fundraising, leadership or candidate committee.
+- `PrimCode`: The standard five character code identifying the committee's industry or ideology.
+- `Source`: Indicates how the PrimCode was determined.
+- `Sensitive`: If "Y", the committee has significant business in multiple industries, some of which fall under the jurisdiction of specific congressional committees.
+- `Foreign`: This is a bit field. Off/False indicate that the company is not owned by a foreign entity. Those that are owned by a foreign entity are on/True, sometimes "-1".
+- `Active`: Determines if cmte is active in the cycle - false is no and true is yes
 
 
 #### PACs to Candidates
 ```julia
 OpenSecrets.pacs_to_candidates(year)
 ```
-- `Cycle`: 
-- `FECRecNo`: 
-- `PACID`: 
-- `CID`: Candidate name in format of firstname lastname and party in parens, like "Steve Kagen (D)".
-- `Amount`: 
-- `Date`: 
-- `RealCode`: 
-- `Type`: 
-- `DI`: 
-- `FECCandID`: 
+- `Cycle`: Last year (even year) of the federal 2-year election cycle
+- `FECRecNo`: A unique record identifier within a given cycle.
+- `PACID`: The committee id number for the PAC making the contribution.
+- `CID`: A unique identifier for candidates that is constant throughout cycles.
+- `Amount`: The amount contributed. This will be negative for refunds.
+- `Date`: The reported date of the contribution.
+- `RealCode`: The standard five character code identifying the donor's industry or ideology. Usually based on Primcode. Sometimes a PAC sponsor will have secondary interests which may replace the main realcode depending on recipient. For example, Boeing is primarily Air Transport but has Air Defense interests. Thus Boeing contributions to members of the Armed Services committee would have a realcode of Air Defense.
+- `Type`: The transaction type code for the contribution. 24A is an Independent Expenditure against the candidate, 24C is a coordinated expenditure, 24E is an independent expenditure for the candidate, 24F is a communication cost for the candidate, 24K is a direct contribution, 24N is a communication cost against the candidate and 24Z is an in kind contribution
+- `DI`: Whether the contribution is direct ("D") or indirect ("I."). Indirect contributions include independent expenditures and communications costs, are not subject to contribution limits and must be made completely independently of the candidate. Indirect contributions can also be against the candidate.
+- `FECCandID`: FECCandID of recipient candidate
 
 
 #### PACs to PACs
