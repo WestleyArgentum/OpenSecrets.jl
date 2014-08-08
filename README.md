@@ -126,63 +126,64 @@ OpenSecrets.pacs_to_candidates(year)
 ```julia
 OpenSecrets.pacs_to_other(year)
 ```
-- `Cycle`: 
-- `FECRecNo`: 
-- `Filerid`: 
-- `DonorCmte`: 
-- `ContribLendTrans`: 
-- `City`: 
-- `State`: 
-- `Zip`: 
-- `FECOccEmp`: 
-- `Primcode`: 
-- `Date`: 
-- `Amount`: 
-- `RecipID`: 
-- `Party`: 
-- `Otherid`: 
-- `RecipCode`: 
-- `RecipPrimcode`: 
-- `Amend`: 
-- `Report`: 
-- `PG`: 
-- `Microfilm`: 
-- `Type`: 
-- `RealCode`: 
-- `Source`: 
+- `Cycle`: Last year (even year) of the federal 2-year election cycle
+- `FECRecNo`: A unique record identifier within a given cycle.
+- `Filerid`: The committee id number for the PAC making the filing. Refers to donor if Type 2* or recipient if Type=1*.
+- `DonorCmte`: The standardized name for the donor based on the name of the PAC's sponsor.
+- `ContribLendTrans`: Reported name of the donor if Type=1* or the recipient if Type=2*.
+- `City`: The donor's city. This could be based on a home address or an employer's address.
+- `State`: The donor's state. This could be based on a home address or an employer's address.
+- `Zip`: The donor's zip code. This could be based on a home address or an employer's address.
+- `FECOccEmp`: The donor's disclosed employer and/or occupation.
+- `Primcode`: The primary industry/ideological code for the donor PAC's sponsor.
+- `Date`: The reported date of the contribution.
+- `Amount`: The amount contributed. This will be negative for refunds.
+- `RecipID`: The recipient's id number. If the contribution is to a candidate this will be the candidate's unique candidate id number. Otherwise, it will be the FEC committee id number.
+- `Party`: The party (if any) of the recipient. "D" for Democratic, "R" for Republican", "I" for Independent, "L" for Libertarian", "3" for other third party and "U" for Unknown. This field will be blank or null for PACs other than leadership PACs.
+- `Otherid`: Committee id for donor if Type=1* or recipient if Type=2*.
+- `RecipCode`: A two character code defining the type of recipient. For candidates, the first character is party ("D" for Democratic, "R" for Republican, "3" for Independent, Libertarian or third party, "U" for Unknown.) The second character is "W" for Winner, "L" for Loser, "I" for incumbent, "C" for Challenger, "O" for "Open Seat", and "N" for Non-incumbent. "N" is reserved for candidates that are neither in office nor running during the cycle in question. For party committees, the first character is party and the second character is "P." For PACs, the first character is "P" and for outside spending groups, the first character is "O". For both, the second character is "B" for Business, "L" for Labor", "I" for Ideological, "O" for "Other" and "U" for unknown.
+- `RecipPrimcode`: The industry/ideological code for the recipient - codes beginning with Z1 are candidate committees, codes beginning with Z5 are party committees and codes beginning with J2 are leadership PACs.
+- `Amend`: Whether the record comes from an amended report
+- `Report`: The type of report - 1st quarter, year end, etc.
+- `PG`: Whether the contribution is for a Primary ("P") or General ("G") election.
+- `Microfilm`: The FEC microfilm record for the contribution
+- `Type`: The transaction type code for the contribution. 11 is a tribal contribution, 22Z is a contribution refund to a candidate or committee, 24G is a Transfer to an affiliated committee, 24K is a direct contribution, 24R is a election recount disbursement and 24Z is an in kind contribution
+- `RealCode`: The standard five character code identifying the donor's industry or ideology.Usually based on Primcode. Sometimes a PAC sponsor will have secondary interests which may replace the main realcode depending on recipient. For example, Boeing is primarily Air Transport but has Air Defense interests. Thus Boeing contributions to members of the Armed Services committee would have a realcode of Air Defense.
+- `Source`: Indicates how the Realcode was determined.
+
 
 #### Individual Contributions
 ```julia
 OpenSecretes.individual_contributions(year)
 ```
-- `Cycle`: 
-- `FECTransID`: 
-- `ContribID`: 
-- `Contrib`: 
-- `RecipID`: 
-- `Orgname`: 
-- `UltOrg`: 
-- `RealCode`: 
-- `Date`: 
-- `Amount`: 
-- `Street`: 
-- `City`: 
-- `State`: 
-- `Zip`: 
-- `RecipCode`: 
-- `Type`: 
-- `CmteID`: 
-- `OtherID`: 
-- `Gender`: 
-- `Microfilm`: 
-- `Occupation`: 
-- `Employer`: 
-- `Source`: 
+- `Cycle`: Last year (even year) of the federal 2-year election cycle
+- `FECTransID`: A unique record identifier within a given cycle.
+- `ContribID`: A unique identifier for individual donors.  Family groups match on first 11 chars
+- `Contrib`: The name of the contributor, usually in the format Last name, First Name.
+- `RecipID`: The recipient's id number. If the contribution is to a candidate this will be the candidate's unique candidate id number. Otherwise, it will be the FEC committee id number.
+- `Orgname`: The standardized organization name for the contributor. This is usually based on the donor's employer. The donor may not have an income producing occupation (e.g. homemaker)
+- `UltOrg`: The standardized parent organization for the organization listed in the Orgname field. If there is no parent identified, this field will be blank or null.
+- `RealCode`: The standard five character code identifying the donor's industry or ideology. Usually based on Orgname (e.g., the orgname "Microsoft Corp" would normally get realcode C5120 for computer software.)
+- `Date`: The reported date of the contribution.
+- `Amount`: The amount contributed. This will be negative for refunds.
+- `Street`: 2000+ cycle only, and only for committees that file electronically
+- `City`: The donor's city. This could be based on a home address or an employer's address. 
+- `State`: The donor's state. This could be based on a home address or an employer's address.
+- `Zip`: The donor's zip code. This could be based on a home address or an employer's address.
+- `RecipCode`: A two-character code defining the type of recipient. For candidates, the first character is party ("D" for Democratic, "R" for Republican, "3" for Independent, Libertarian or third party, "U" for Unknown.) The second character is "W" for Winner, "L" for Loser, "I" for incumbent, "C" for Challenger, "O" for "Open Seat", and "N" for Non-incumbent. "N" is reserved for candidates that are neither in office nor running during the cycle in question. For party committees, the first character is party and the second character is "P." For PACs, the first character is "P" and the second character is "B" for Business, "L" for Labor", "I" for Ideological, "O" for "Other" and "U" for unknown.
+- `Type`: The transaction type code for the contribution. 15 is a contribution, 15e is an earmarked contribution (made through a group such as Club for Growth or Emily's List), 15j is a contribution through a joint fund raising committee and 22y is a refund. "10" indicates "soft" or nonfederal money for the 2002 cycle and earlier. For the 2004 cycle and later type "10" indicates Levin funds.or outside spending.
+- `CmteID`: The committee id number for the recipient. Note that a candidate can have more than one committee — this field indicates the exact committee receiving the contribution.
+- `OtherID`: The committee id number for the intermediary party to earmarked contributions.
+- `Gender`: The donor's gender. Can also be "U" if unknown or "N" if the name is ambiguous.
+- `Microfilm`: Refers to specific page of FEC report images on which this transaction appears.
+- `Occupation`: The donor's disclosed occupation.
+- `Employer`: The donor's s disclosed employer
+- `Source`: Indicates how the RealCode was determined — see the How to Use Source in the OpenSecrets OpenData Guide
 
 Note that older versions of the individual contributions table (pre 2012) will not contain `Occupation` or `Employer`, but will include:
-- `Occ_EF`: 
-- `Emp_EF`: 
-- `FecOccEmp`: 
+- `Occ_EF`: The donor's disclosed occupation from electronic filing.
+- `Emp_EF`: The donor's disclosed employer from electronic filing.
+- `FecOccEmp`: The donor's disclosed employer and/or occupation.
 
 
 ### Lobbying Data
