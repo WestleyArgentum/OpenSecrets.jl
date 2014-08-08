@@ -6,7 +6,7 @@ A Julia package for working with [OpenSecrets data](http://www.opensecrets.org/r
 ## Quickstart
 
 ```julia
-julia> Pkg.clone("https://github.com/WestleyArgentum/OpenSecrets.jl.git")
+julia> Pkg.add("OpenSecrets")
 
 julia> using DataFrames
 
