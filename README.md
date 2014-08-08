@@ -57,20 +57,15 @@ julia> pac_contribs[ Bool[ !isna(c) && ismatch(r"N00009638", c) for c in pac_con
 
 ## API
 
-### OpenSecrets.jl
-
-#### Detecting Data Sources
-Unfortunately it's not practicle to bundle all the OpenSecrets data along with this package. Instead, OpenSecrets.jl attempts to detect sources of data stored locally in `OpenSecrets.jl/data`. If your data is stored somewhere else, you can tell OpenSecrets.jl about it using `detect_data_sources`.
+### Detecting Data Sources
+Unfortunately it's not practicle to bundle all the OpenSecrets data along with this package. Instead, OpenSecrets.jl attempts to detect sources of data stored locally in `OpenSecrets.jl/data`. If your data is stored somewhere else, you can tell OpenSecrets.jl about it by calling `detect_data_sources` with the path to the directory containing the unzipped files.
 
 ```julia
 detect_data_sources(dir::String)
 ```
-- `dir`: The path to a directory containing unziped versions of the OpenSecrets OpenData.
 
 
 ### Campaign Finance Data
-
-#### Common Inputs / Outputs
 All of the campaign finance data methods take an integer `year`, and output a DataFrame. Data sets are released every 2 years (according to the election cycle) and data is available starting 1990.
 
 #### Candidates
