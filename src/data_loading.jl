@@ -70,7 +70,7 @@ function individual_contributions(year)
 
     # the OpenData naming scheme isn't really scalable, but for now, 90 and above for 1990 - 1999
     # and 00+ for 2000 and on.
-    if 90 <= short_year_int
+    if 90 <= short_year_int || short_year_int <= 2010
         field_names = [:Cycle, :FECTransID, :ContribID, :Contrib, :RecipID, :Orgname, :UltOrg, :RealCode, :Date,
                       :Amount, :Street, :City, :State, :Zip, :RecipCode, :Type, :CmteID, :OtherID, :Gender,
                       :FecOccEmp, :Microfilm, :Occ_EF, :Emp_EF, :Source]
