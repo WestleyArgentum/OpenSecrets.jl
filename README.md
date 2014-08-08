@@ -77,20 +77,117 @@ All of the campaign finance data methods take an integer `year`, and output a Da
 ```julia
 OpenSecrets.candidates(year)
 ```
-The candidates table includes lots of interesting information about candidates, including but not limited to: their unique CID, party, and whether they've committed to forgo contributions from PACs.
+- `Cycle`: Last year (even year) of the federal two year election cycle.
+- `FECCandID`: Assigned by FEC and selected by CRP as the active, should multiples exist.
+- `CID`: Unique identifier for each candidate. Every candidate should have one and only one CID throughout all cycles. Recipid for candidates is based on CID.
+- `FirstLastP`: Candidate name in format of firstname lastname and party in parens, like "Steve Kagen (D)".
+- `Party`: The party of the candidate. "D" for Democratic, "R" for Republican", "I" for Independent, "L" for Libertarian", "3" for other third party and "U" for Unknown.
+- `DistIDRunFor`: Four character identifier of the office sought by the candidate. For congressional races, the first two characters are the state and the next two are the district for House candidates and "S1" or "S2" for Senate candidates. "PRES" indicates a presidential candidate.
+- `DistIDCurr`: Four character identifier of the office currently held (if any) by the candidate. For House members, the first two characters are the state and the next two are the district. For Senators the first two characters are the state and the last two characters are "S1" or "S2". "PRES" indicates a presidential candidate. For non-incumbents, this field is blank. If a member of Congress dies or leaves office, this field should become blank. This field is frozen on election day. For cycles prior to the current cycle, DistidCurr reflects office held on Election Day of the Cycle.
+- `CurrCand`: This field indicates whether the candidate is currently running for federal office - "Y" means yes, otherwise this field is blank. If a candidate loses a primary or drops out of the race, this field becomes blank. This field is frozen on Election Day, and thus for previous cycles can be used to show the candidate who ran in the general election.
+- `CycleCand`: This field indicates whether the candidate ever ran for federal office during the cycle in question. Like CurrCand, "Y" means yes and blank means no. This field should be "Y" for any candidate who filed to run for office or otherwise formally declared intention to run. This does NOT change if the candidate drops out or loses a primary. Be aware that we've tightened the definition in recent cycles - for older data, CycleCand is likely to cast a broader net. Also note that incumbents are usually assumed to be running for re-election and get a "Y" in CycleCand unless there is evidence to the contrary.
+- `CRPICO`: Identifies type of candidate - "I" is incumbent, "C" is challenger, "O" is open seat. This may be blank if the candidate is neither a member of Congress nor running this cycle. Note this is based on the office sought. A House incumbent running for the Senate would have a CRPICO of "C" or "O", not "I."
+- `RecipCode`: A two-character code defining the type of candidate. The first character is party ("D" for Democratic, "R" for Republican, "3" for Independent or third party, "U" for Unknown.) The second character is "W" for Winner, "L" for Loser, "I" for incumbent, "C" for Challenger, "O" for "Open Seat", and "N" for Non-incumbent. Incumbent, Challenger and Open Seat are based on CRPICO. "N" is reserved for candidates that are neither in office nor running during the cycle in question. This lives in dbo_CandsCRP.
+- `NoPacs`: Indicates whether candidate has publicly committed to forego contributions from PACs.
+
 
 #### FEC Committees (PACs and Candidate and Party Committees)
 ```julia
 OpenSecretes.committees(year)
 ```
-The committees table contains information about all types of FEC Committees. Interesting fields include "CmteID", which is unique id assigned by the FEC, and "Sensative" which denotes the the committee has business in industries that fall under the jurisdiction of specific congressional committees.
+- `Cycle`: 
+- `CmteID`: 
+- `PACShort`: 
+- `Affiliate`: 
+- `Ultorg`: 
+- `RecipID`: 
+- `RecipCode`: 
+- `FECCandID`: 
+- `Party`: 
+- `PrimCode`: 
+- `Source`: 
+- `Sensitive`: 
+- `Foreign`: 
+- `Active`: 
 
 
 #### PACs to Candidates
+```julia
+OpenSecrets.pacs_to_candidates(year)
+```
+- `Cycle`: 
+- `FECRecNo`: 
+- `PACID`: 
+- `CID`: Candidate name in format of firstname lastname and party in parens, like "Steve Kagen (D)".
+- `Amount`: 
+- `Date`: 
+- `RealCode`: 
+- `Type`: 
+- `DI`: 
+- `FECCandID`: 
+
 
 #### PACs to PACs
+```julia
+OpenSecrets.pacs_to_other(year)
+```
+- `Cycle`: 
+- `FECRecNo`: 
+- `Filerid`: 
+- `DonorCmte`: 
+- `ContribLendTrans`: 
+- `City`: 
+- `State`: 
+- `Zip`: 
+- `FECOccEmp`: 
+- `Primcode`: 
+- `Date`: 
+- `Amount`: 
+- `RecipID`: 
+- `Party`: 
+- `Otherid`: 
+- `RecipCode`: 
+- `RecipPrimcode`: 
+- `Amend`: 
+- `Report`: 
+- `PG`: 
+- `Microfilm`: 
+- `Type`: 
+- `RealCode`: 
+- `Source`: 
 
 #### Individual Contributions
+```julia
+OpenSecretes.individual_contributions(year)
+```
+- `Cycle`: 
+- `FECTransID`: 
+- `ContribID`: 
+- `Contrib`: 
+- `RecipID`: 
+- `Orgname`: 
+- `UltOrg`: 
+- `RealCode`: 
+- `Date`: 
+- `Amount`: 
+- `Street`: 
+- `City`: 
+- `State`: 
+- `Zip`: 
+- `RecipCode`: 
+- `Type`: 
+- `CmteID`: 
+- `OtherID`: 
+- `Gender`: 
+- `Microfilm`: 
+- `Occupation`: 
+- `Employer`: 
+- `Source`: 
+
+Note that older versions of the individual contributions table (pre 2012) will not contain `Occupation` or `Employer`, but will include:
+- `Occ_EF`: 
+- `Emp_EF`: 
+- `FecOccEmp`: 
 
 
 ### Lobbying Data
